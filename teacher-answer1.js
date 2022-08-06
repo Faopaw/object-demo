@@ -48,7 +48,3 @@ class Person {
   Leo.learnSubject('React');
   console.log(Leo);
   console.log(Leo.subjects);
-
-Teacher.prototype.learnSubject(newSubject) {
-    ...
-}
