@@ -161,6 +161,7 @@ class Game {
         this.p2.divRef = document.getElementById(loc2ID);
         this.attackButtonRef = document.getElementById(attackButtonID);
         this.attackButtonRef.addEventListener('click', function() {
+            this.disabled = 'disabled';
             game.p1.attack(game.p2);
             game.refreshScreen();
             if (game.p2.isLost()) {
@@ -177,6 +178,7 @@ class Game {
                     alert('You Lose!');
                     game.attackButtonRef.disabled = 'disabled';
                 }
+                game.attackButtonRef.disabled = '';
             }, 3000)
         });
     }
