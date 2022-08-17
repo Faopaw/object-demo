@@ -187,10 +187,10 @@ class Game {
         let input = 0;
         while (true) {
             input = parseInt(prompt('How many cards do you want at the beginning?'));
-            if (input <= 0)
-                alert('Please enter a positive integer.');
-            else 
+            if (input > 0)
                 return input;
+            else 
+                alert('Please enter a positive integer.');
         }
     }
 
