@@ -144,9 +144,9 @@ class Player {
         }
     }
 
-    // isLost() {
-    //     return this.hands.length === 0;
-    // }
+    isLost() {
+        return this.hands.length === 0;
+    }
 }
 
 
