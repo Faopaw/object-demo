@@ -155,10 +155,15 @@ class Game {
         this.p1 = new Player('Human Player');
         this.p2 = new Player('Computer');
     }
-
-    bindBoard(loc1, loc2) { // the id of elements showing the players' hands.
-        this.p1.divRef = document.getElementById(loc1);
-        this.p2.divRef = document.getElementById(loc2);
+    
+    bindBoard(loc1ID, loc2ID, attackButtonID) { // the id of elements showing the players' hands.
+        this.p1.divRef = document.getElementById(loc1ID);
+        this.p2.divRef = document.getElementById(loc2ID);
+        this.attackButtonRef = document.getElementById(attackButtonID);
+        this.attackButtonRef.addEventListener('click', function() {
+            game.p1.attack(game.p2);
+            game.refreshScreen();
+        });
     }
 
     getNumCards() {
@@ -176,7 +181,7 @@ class Game {
         const n = this.getNumCards();
         this.p1.initHands(n);
         this.p2.initHands(n);
-        this.bindBoard('human', 'comp');
+        this.bindBoard('human', 'comp', 'attack');
         this.refreshScreen();
     }
 
@@ -188,6 +193,8 @@ class Game {
 
 let game = new Game();
 game.initGame();
+
+
 
 // test it!
 
@@ -247,8 +254,8 @@ game.initGame();
 // p1.display(document.getElementById("human"));
 // p2.display(document.getElementById("comp"));
 
-document.getElementById('attack').addEventListener('click', function() {
-    game.p1.attack(game.p2);
-    game.refreshScreen();
-}
-);
+// document.getElementById('attack').addEventListener('click', function() {
+//     game.p1.attack(game.p2);
+//     game.refreshScreen();
+// }
+// );
