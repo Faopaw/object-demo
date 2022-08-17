@@ -163,6 +163,21 @@ class Game {
         this.attackButtonRef.addEventListener('click', function() {
             game.p1.attack(game.p2);
             game.refreshScreen();
+            if (game.p2.isLost()) {
+                // alert(game.p2.getLosingMessage());
+                alert('You Win!');
+                this.disabled = 'disabled';
+                return;
+            }
+
+            setTimeout(function () {
+                game.p2.attack(game.p1);
+                game.refreshScreen();   
+                if (game.p1.isLost()) {
+                    alert('You Lose!');
+                    game.attackButtonRef.disabled = 'disabled';
+                }
+            }, 3000)
         });
     }
 
