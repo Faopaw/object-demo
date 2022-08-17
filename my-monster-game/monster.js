@@ -12,8 +12,8 @@ const config = {
 };
 
 class Monster {
-    constructor(hp, maxHp, ap) {
-        this.hitPoint = hp;
+    constructor(maxHp, ap) {
+        this.hitPoint = maxHp;
         this.maxHitPoint = maxHp;
         this.attackPoint = ap;
     }
@@ -52,7 +52,7 @@ class Monster {
 
 class Werewolf extends Monster {
     constructor() {
-        super(config.WEREWOLF_MAX_HP, config.WEREWOLF_MAX_HP, config.WEREWOLF_AP);
+        super(config.WEREWOLF_MAX_HP, config.WEREWOLF_AP);
     }
 
 
@@ -61,7 +61,7 @@ class Werewolf extends Monster {
 
 class Vampire extends Monster {
     constructor() {
-        super(config.VAMPIRE_MAX_HP, config.VAMPIRE_MAX_HP, config.VAMPIRE_AP);
+        super(config.VAMPIRE_MAX_HP, config.VAMPIRE_AP);
     }
 
     attack(anotherMonster) {
@@ -81,7 +81,7 @@ class Vampire extends Monster {
 
 class Mummy extends Monster {
     constructor() {
-        super(config.MUMMY_MAX_HP, config.MUMMY_MAX_HP, config.MUMMY_AP);
+        super(config.MUMMY_MAX_HP, config.MUMMY_AP);
         this.attackCount = 0;
     }
 
@@ -143,6 +143,10 @@ class Player {
             div.appendChild(card.toDomNode());
         }
     }
+
+    // isLost() {
+    //     return this.hands.length === 0;
+    // }
 }
 
 
