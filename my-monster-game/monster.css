@@ -1,0 +1,16 @@
+.monster {
+    border: 1px solid black;
+    background-color:lightpink;
+    width: 15em;
+    height: 15em;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    padding: 1em;
+    margin: 1em;
+}
+
+.player {
+    height: 20em;
+    padding: 1em;
+    background-color: antiquewhite;
+    display: flex;
+}
