@@ -92,13 +92,15 @@ class Mummy extends Monster {
         }
         else {
             this.beingHit(config.MUMMY_FAILED_ATTACK_LOSE_LIFE);
-            this.attack = 0;
+            this.attackCount = 0;
         }
     }
 }
 
 class Player {
-    constructor() {
+    constructor(name) {
+        this.name = name;
+        this.divRef = undefined;  // the dom ref to the display location
         this.hands = [];   // storing the cards
     }
 
@@ -120,6 +122,7 @@ class Player {
         let attackCard = this.hands[attackCardIndex];
         let defendCard = anotherPlayer.hands[defendCardIndex];
 
+        console.log(attackCardIndex + ' ' + defendCardIndex);
         attackCard.attack(defendCard);
 
         if (defendCard.isDead()) {
@@ -132,12 +135,55 @@ class Player {
     }
 
     display(div) {  // takes an html element, and display hands in it.
+        if (div === undefined) {
+            div = this.divRef;
+        }
         div.innerHTML = '';
         for (let card of this.hands) {
             div.appendChild(card.toDomNode());
         }
     }
 }
+
+
+class Game {
+    constructor() {
+        this.p1 = new Player('Human Player');
+        this.p2 = new Player('Computer');
+    }
+
+    bindBoard(loc1, loc2) { // the id of elements showing the players' hands.
+        this.p1.divRef = document.getElementById(loc1);
+        this.p2.divRef = document.getElementById(loc2);
+    }
+
+    getNumCards() {
+        let input = 0;
+        while (true) {
+            input = parseInt(prompt('How many cards do you want at the beginning?'));
+            if (input <= 0)
+                alert('Please enter a positive integer.');
+            else 
+                return input;
+        }
+    }
+
+    initGame() {
+        const n = this.getNumCards();
+        this.p1.initHands(n);
+        this.p2.initHands(n);
+        this.bindBoard('human', 'comp');
+        this.refreshScreen();
+    }
+
+    refreshScreen() {
+        this.p1.display();
+        this.p2.display();
+    }
+}
+
+let game = new Game();
+game.initGame();
 
 // test it!
 
@@ -188,18 +234,17 @@ class Player {
 // let p1 = document.getElementById('human');
 // p1.appendChild(ww1.toDomNode());
 
-let p1 = new Player();
-let p2 = new Player();
+// let p1 = new Player();
+// let p2 = new Player();
 
-p1.initHands(2);
-p2.initHands(2);
+// p1.initHands(2);
+// p2.initHands(2);
 
-p1.display(document.getElementById("human"));
-p2.display(document.getElementById("comp"));
+// p1.display(document.getElementById("human"));
+// p2.display(document.getElementById("comp"));
 
 document.getElementById('attack').addEventListener('click', function() {
-    p1.attack(p2);
-    p1.display(document.getElementById("human"));
-    p2.display(document.getElementById("comp"));
+    game.p1.attack(game.p2);
+    game.refreshScreen();
 }
 );
