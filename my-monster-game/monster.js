@@ -9,6 +9,7 @@ const config = {
     MUMMY_MAX_HP: 150,
     MUMMY_AP: 25,
     MUMMY_FAILED_ATTACK_LOSE_LIFE: 15,
+    RETALIATION_TIMEOUT: 2000,
 };
 
 class Monster {
@@ -42,10 +43,6 @@ class Monster {
     }
 
     toDomNode() {
-        // let cardDom = document.createElement('div');
-        // cardDom.setAttribute('class', 'monster');
-        // cardDom.innerHTML = `<h2>${this.constructor.name}</h2><p>HP: ${this.hitPoint} / ${this.maxHitPoint}</p>`
-        // return cardDom;
         let cardDom = document.createElement('div');
         cardDom.setAttribute('class', 'monster');
         cardDom.innerHTML = `<h2>${this.constructor.name}</h2><p>HP: ${this.hitPoint} / ${this.maxHitPoint}</p>`
@@ -175,17 +172,17 @@ class Game {
         this.p2 = new Player('Computer');
     }
     
-    bindBoard(loc1ID, loc2ID, attackButtonID) { // the id of elements showing the players' hands.
-        this.p1.divRef = document.getElementById(loc1ID);
-        this.p2.divRef = document.getElementById(loc2ID);
-        this.attackButtonRef = document.getElementById(attackButtonID);
+    bindBoard(loc1Id, loc2Id, attackButtonId, msgBoxId) { // the id of elements showing the players' hands.
+        this.p1.divRef = document.getElementById(loc1Id);
+        this.p2.divRef = document.getElementById(loc2Id);
+        this.attackButtonRef = document.getElementById(attackButtonId);
+        this.msgBoxRef = document.getElementById(msgBoxId);
         this.attackButtonRef.addEventListener('click', function() {
             this.disabled = 'disabled';
             game.p1.attack(game.p2);
             game.refreshScreen();
             if (game.p2.isLost()) {
-                // alert(game.p2.getLosingMessage());
-                alert('You Win!');
+                game.printWinningMsg();
                 this.disabled = 'disabled';
                 return;
             }
@@ -194,11 +191,11 @@ class Game {
                 game.p2.attack(game.p1);
                 game.refreshScreen();   
                 if (game.p1.isLost()) {
-                    alert('You Lose!');
+                    game.printLosingMsg();
                     game.attackButtonRef.disabled = 'disabled';
                 }
                 game.attackButtonRef.disabled = '';
-            }, 3000)
+            }, config.RETALIATION_TIMEOUT)
         });
     }
 
@@ -217,13 +214,23 @@ class Game {
         const n = this.getNumCards();
         this.p1.initHands(n);
         this.p2.initHands(n);
-        this.bindBoard('human', 'comp', 'attack');
+        this.bindBoard('human', 'comp', 'attack', 'message');
         this.refreshScreen();
     }
 
     refreshScreen() {
         this.p1.display();
         this.p2.display();
+    }
+
+    printWinningMsg() {
+        this.msgBoxRef.innerHTML = '<div>You Win!!</div>';
+        this.msgBoxRef.style.backgroundColor = 'orange';
+    }
+
+    printLosingMsg() {
+        this.msgBoxRef.innerHTML = '<div>You Lose!!</div>';
+        this.msgBoxRef.style.backgroundColor = 'yellow';
     }
 }
 

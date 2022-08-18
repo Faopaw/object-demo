@@ -17,5 +17,11 @@
 }
 
 #message {
-    height: 4ex;
+    height: 4em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: x-large;
 }
