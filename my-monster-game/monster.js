@@ -187,13 +187,24 @@ class Game {
                 this.disabled = 'disabled';
                 return;
             }
+            if (game.p1.isLost()) {
+                game.printLosingMsg();
+                this.disabled = 'disabled';
+                return;
+            }
 
             setTimeout(function () {
                 game.p2.attack(game.p1);
                 game.refreshScreen();   
+                if (game.p2.isLost()) {
+                    game.printWinningMsg();
+                    game.attackButtonRef.disabled = 'disabled';
+                    return;
+                }
                 if (game.p1.isLost()) {
                     game.printLosingMsg();
                     game.attackButtonRef.disabled = 'disabled';
+                    return;
                 }
                 game.attackButtonRef.disabled = '';
             }, config.RETALIATION_TIMEOUT)
