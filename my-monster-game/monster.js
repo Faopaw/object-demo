@@ -117,10 +117,11 @@ class Player {
     constructor(name) {
         this.name = name;
         this.divRef = undefined;  // the dom ref to the display location
-        this.hands = [];   // storing the cards
+        this.hands = undefined;   // storing the cards
     }
 
     initHands(n) {
+        this.hands = [];
         for (let i = 0; i < n; i++) {
             let rand = Math.random();
             if (rand < (1 / 3))
@@ -214,8 +215,11 @@ class Game {
         const n = this.getNumCards();
         this.p1.initHands(n);
         this.p2.initHands(n);
-        this.bindBoard('human', 'comp', 'attack', 'message');
         this.refreshScreen();
+        game.attackButtonRef.style.display = 'block';
+        game.attackButtonRef.disabled = '';
+        game.msgBoxRef.innerHTML = '';
+        game.msgBoxRef.style.backgroundColor = 'inherit';
     }
 
     refreshScreen() {
@@ -226,16 +230,29 @@ class Game {
     printWinningMsg() {
         this.msgBoxRef.innerHTML = '<div>You Win!!</div>';
         this.msgBoxRef.style.backgroundColor = 'orange';
+        this.reset();
     }
 
     printLosingMsg() {
         this.msgBoxRef.innerHTML = '<div>You Lose!!</div>';
         this.msgBoxRef.style.backgroundColor = 'yellow';
+        this.reset();
+    }
+
+    reset() {
+        document.getElementById('start').style.display = 'block';
+        this.attackButtonRef.style.display = 'none';
     }
 }
 
+let startButtonRef = document.getElementById('start');
+startButtonRef.addEventListener('click', function() {
+    this.style.display = 'none';
+    game.initGame();    
+});
+
 let game = new Game();
-game.initGame();
+game.bindBoard('human', 'comp', 'attack', 'message');
 
 
 
