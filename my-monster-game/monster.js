@@ -42,9 +42,28 @@ class Monster {
     }
 
     toDomNode() {
+        // let cardDom = document.createElement('div');
+        // cardDom.setAttribute('class', 'monster');
+        // cardDom.innerHTML = `<h2>${this.constructor.name}</h2><p>HP: ${this.hitPoint} / ${this.maxHitPoint}</p>`
+        // return cardDom;
         let cardDom = document.createElement('div');
         cardDom.setAttribute('class', 'monster');
         cardDom.innerHTML = `<h2>${this.constructor.name}</h2><p>HP: ${this.hitPoint} / ${this.maxHitPoint}</p>`
+        
+        // create red bar;
+        let redBar = document.createElement('div');
+        redBar.style.backgroundColor = 'red';
+        redBar.style.height = '20px';
+        redBar.style.display = 'flex';
+        cardDom.appendChild(redBar);
+
+        // create green bar;
+        let greenBar = document.createElement('div');
+        greenBar.style.backgroundColor = 'green';
+        greenBar.style.height = '20px';
+        greenBar.style.width = `${this.hitPoint / this.maxHitPoint * 100}%`;
+        redBar.appendChild(greenBar);
+
         return cardDom;
     }
 }

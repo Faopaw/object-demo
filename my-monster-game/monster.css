@@ -12,6 +12,7 @@
 .player {
     padding: 1em;
     background-color: antiquewhite;
+    min-height: 15em;
     display: flex;
 }
 
